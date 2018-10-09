@@ -18,6 +18,21 @@ export default class Counter extends React.Component{
         }
     }
 
+    componentDidMount() {
+        console.log("Counter componentDidMount")
+        this.timer = setInterval(() => {
+            console.log('Timer called ')
+            this.setState({
+                counter: this.state.counter + 1
+            })
+        }, 2000);
+    }
+
+    componentWillUnmount() {
+        console.log("Counter componentWillUnmount")
+        clearInterval(this.timer);
+    }
+
     // ES.NEXT
     // invoked by react context on click
     // this, we use =>
@@ -41,10 +56,18 @@ export default class Counter extends React.Component{
         // async*
         // trigger render method after updating state 
         console.log('counter before ', this.state.counter);
+        const counter = this.state.counter - 1
         this.setState({
-            counter: this.state.counter - 1
+            counter: counter
+        }, () => {
+            // callback, called after render
+            console.log('SetState callback')
+            console.log('counter ', this.state.counter);
+            // business logic
+            //setState
         })
          
+        // Business logic using counter, not using this.state.counter
         console.log('counter after ', this.state.counter);
     }
 

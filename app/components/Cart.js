@@ -26,10 +26,27 @@ export default class Cart extends React.Component {
             qty: 1
         }
         //TODO
+        // React is a view lib, 
+            // compare virtual dom
+        // Model? Data, compare models
+        // Good
+        // Immutable
+
+        const items = [...this.state.items, item]
+         
+        // set the next items, 
+        // call render method
+        this.setState({
+            items: items
+        })
     }
 
     empty = () => {
         //TODO
+        const items = [];
+        this.setState({
+            items: items
+        })
     }
     
     dummy = () => {
@@ -39,11 +56,21 @@ export default class Cart extends React.Component {
         })
     }
 
+    // child to parent
+    // callback
+    // parent shall pass a function to child as prop
+    // child shall call parent function
     removeItem = (id) => {
-        //TODO
+        console.log('removeitem called', id);
+        //return all the items except one with id ==
+        const items = this
+                     .state.items.filter(item => item.id != id);
+
+        this.setState({items: items});
     }
 
     updateItem = (id, qty) => {
+        console.log('updateItem called', id, qty);
         //TODO
     }
 
@@ -63,7 +90,10 @@ export default class Cart extends React.Component {
                 </View>
                 {/* JSX comment */}
                 <View>
-                    <CartList items={this.state.items}  />
+                    <CartList items={this.state.items}  
+                              removeItem={this.removeItem}
+                              updateItem={this.updateItem}
+                    />
                 </View>
             </View>
         )
