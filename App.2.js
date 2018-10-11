@@ -1,28 +1,17 @@
 // App.js
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-// import {NavigationActions, DrawerActions} from 'react-navigation';
-
-// fixme: move to index.js
-// to pass store as context to all the containers component
-import {Provider} from 'react-redux';
-import store from './app/store';
 
 import Counter from './app/components/Counter';
 import Address from './app/components/Address';
-import Cart from './app/containers/Cart';
+import Cart from './app/components/Cart';
 import Home from './app/components/Home';
 import ProductList from './app/components/ProductList';
 import Checkout from './app/components/Checkout';
-import ReduxCounter from './app/components/ReduxCounter';
-
-import ReduxFuncCounter from './app/containers/ReduxFuncCounter';
-
-import Profile from './app/components/Profile';
 import Login from './app/components/Login';
+import Profile from './app/components/Profile';
 
-
-
+ 
 import {Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 
@@ -37,6 +26,8 @@ const StackNavigator = createStackNavigator({
     screen: Home // component
   },
 
+  // TODO: Counter
+
   Cart: {
     screen: Cart,
     //navigationOptions: { title: 'Cart'}
@@ -44,17 +35,12 @@ const StackNavigator = createStackNavigator({
   Checkout: {
     screen: Checkout
   },
-
-  ReduxCounter: {
-    screen: ReduxCounter
+  Login: {
+    screen: Login
   },
 
-  ReduxFuncCounter: {
-    screen: ReduxFuncCounter
-  },
-  
-  Counter: {
-    screen: Counter
+  Profile: {
+    screen: Profile
   }
 },
     {
@@ -119,26 +105,39 @@ const TabNavigator = createBottomTabNavigator({
 
 );
 
-const DrawerNavivator = createDrawerNavigator({
+import {NavigationActions, DrawerActions} from 'react-navigation';
+
+
+const DrawerNavigator = createDrawerNavigator({
   "Home": {
     screen: TabNavigator // component
   },
-
+ 
+  Cart: {
+    screen: Cart,
+    //navigationOptions: { title: 'Cart'}
+  },
+  Checkout: {
+    screen: Checkout
+  },
   Login: {
     screen: Login
   },
+
   Profile: {
     screen: Profile
   }
-})
+}, {
+  contentComponent: () => <Button title="hello" onPress={() =>{}} />,
+  drawerWidth: 300
 
- 
+})
 
 /*
   App is a parent component
   Counter, Address are child components
 */
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -154,18 +153,9 @@ class App extends React.Component {
  
   render() {
     return (
-      <DrawerNavivator />
+      <DrawerNavigator />
     );
   }
-}
-
-
-export default function AppContainer() {
-  return (
-    <Provider store={store}>
-      <App />
-    </Provider>
-  )
 }
 
 const styles = StyleSheet.create({

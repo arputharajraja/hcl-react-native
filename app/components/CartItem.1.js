@@ -32,24 +32,29 @@ export default class CartItem extends React.PureComponent {
         console.log('CartItem will unmount');
     }
 
-    
+    onQtyChange = (value) => {
+        console.log(value);
+        this.props.updateItem(this.props.item.id, 
+                                value)
+
+    }
 
     render() {
         const {item} = this.props ;
         console.log('CartItem render', item.id);
 
         return (
-            <View  style = {styles.container} >
-                <View style = {styles.details} >
-                <Text style = { {paddingLeft: 10}  } > {item.name}</Text>
-                <Text style={ { fontWeight: 'bold'  } }> ${item.price}</Text>
-                <Text  style = { {paddingRight: 10}  }> Qty: {item.qty}</Text>
+            <View style={styles.container}>
+                <View style={styles.details}>
+                <Text style={styles.title}> {item.name}</Text>
+                <Text style={styles.price} > ${item.price}</Text>
+                <Text style={styles.qty}> Qty: {item.qty}</Text>
                 </View>
-                <View  style = {styles.actionButtons} >
-                    <Button   onPress={ () => this.props.removeItem(item.id)   }
+                <View  style={styles.actions}>
+                    <Button style={styles.removeBtn} onPress={ () => this.props.removeItem(item.id)   }
                             title="Remove" />
-                     <Slider style={styles.slider}
-                            onValueChange={ (value) => { this.props.updateItem(item.id, value)  } } 
+                    <Slider style={styles.slider}
+                            onValueChange={this.onQtyChange} 
                             value={item.qty}
                             step={1}
 
@@ -60,27 +65,36 @@ export default class CartItem extends React.PureComponent {
         )
     }
 }
- 
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 10,
         flex: 1,
-        flexDirection: 'column',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderColor: 'grey'
     },
-
     details: {
         flex: 2,
         flexDirection: 'row',
-        //justifyContent: 'space-between',
-        //marginLeft: 10,
-        //marginRight: 10,
-        paddingTop: 10
+        justifyContent: 'flex-start',
+        marginLeft: 10
     },
-
-    actionButtons: {
+    title: {
+        flex: 3
+    }, 
+    price: {
+        flex: 1,
+        fontWeight: 'bold'
+    },
+    qty: {
+        flex: 1
+    }, 
+    actions: {
         flex: 1,
         flexDirection: 'row'
+    },
+    removeBtn: {
+        flex: 1
     },
     slider: {
         flex: 2
